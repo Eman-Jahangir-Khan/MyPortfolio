@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eman Jahangir Khan — Software Engineer</title>
+<meta name="description" content="Portfolio of Eman Jahangir Khan, Software Engineering student and Flutter/Firebase developer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --maroon-deep:#5C1818;
+    --maroon-mid:#6B1B1B;
+    --maroon-soft:#8a3030;
+    --gold:#C2B399;
+    --gold-bright:#D8C7A2;
+    --cream:#F8F5F0;
+    --cream-deep:#EFE7D9;
+    --ink:#2A2320;
+    --ink-soft:#7d7268;
+    --paper:#FFFDF9;
+    --radius-lg:22px;
+    --radius-md:14px;
+    --ease:cubic-bezier(.22,.9,.26,1);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+  }
+
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:1;
+    opacity:.5;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(92,24,24,.025) 0, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(194,179,153,.06) 0, transparent 45%);
+  }
+
+  a{color:inherit; text-decoration:none;}
+  ::selection{background:var(--gold); color:var(--maroon-deep);}
+  :focus-visible{
+    outline:2.5px solid var(--maroon-deep);
+    outline-offset:3px;
+    border-radius:6px;
+  }
+
+  /* ───────── TOP NAV ───────── */
+  .top-nav{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 5vw;
+    background:rgba(248,245,240,0);
+    transition:background .35s var(--ease), box-shadow .35s var(--ease), padding .35s var(--ease);
+  }
+  .top-nav.scrolled{
+    background:rgba(248,245,240,.9);
+    backdrop-filter:blur(10px);
+    box-shadow:0 1px 0 rgba(92,24,24,.08);
+    padding:14px 5vw;
+  }
+  .brand-mark{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:19px;
+    color:var(--maroon-deep);
+    letter-spacing:.2px;
+  }
+  .brand-mark .dot{
+    width:6px; height:6px; border-radius:50%;
+    background:var(--gold);
+    display:inline-block;
+    transform:translateY(-6px);
+  }
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap:30px;
+  }
+  .nav-links a:not(.nav-cta){
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--ink-soft);
+    transition:color .2s var(--ease);
+  }
+  .nav-links a:not(.nav-cta):hover{color:var(--maroon-deep);}
+  .nav-cta{
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:.3px;
+    padding:9px 18px;
+    border:1.5px solid var(--maroon-deep);
+    border-radius:999px;
+    color:var(--maroon-deep);
+    transition:background .25s var(--ease), color .25s var(--ease);
+    white-space:nowrap;
+  }
+  .nav-cta:hover{background:var(--maroon-deep); color:var(--paper);}
+  .nav-toggle{display:none;}
+
+  /* ───────── HERO ───────── */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding:120px 5vw 80px;
+    z-index:2;
+  }
+  .hero-grid{
+    width:100%;
+    max-width:1280px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1.05fr .8fr;
+    gap:40px;
+    align-items:center;
+  }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:1.6px;
+    text-transform:uppercase;
+    color:var(--maroon-mid);
+    margin-bottom:26px;
+    opacity:0;
+    transform:translateY(10px);
+    animation:rise .8s var(--ease) forwards;
+    animation-delay:.05s;
+  }
+  .eyebrow::before{
+    content:"";
+    width:28px; height:1.5px;
+    background:var(--gold);
+  }
+
+  .hero h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(46px,6vw,84px);
+    line-height:1.02;
+    color:var(--maroon-deep);
+    letter-spacing:-1.5px;
+    opacity:0;
+    transform:translateY(16px);
+    animation:rise .9s var(--ease) forwards;
+    animation-delay:.15s;
+  }
+  .hero h1 em{
+    font-style:italic;
+    font-weight:500;
+    color:var(--maroon-mid);
+  }
+
+  .hero-tagline{
+    margin-top:26px;
+    max-width:480px;
+    font-size:17px;
+    line-height:1.65;
+    color:var(--ink-soft);
+    opacity:0;
+    transform:translateY(14px);
+    animation:rise .9s var(--ease) forwards;
+    animation-delay:.3s;
+  }
+
+  .hero-actions{
+    margin-top:42px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    flex-wrap:wrap;
+    opacity:0;
+    transform:translateY(14px);
+    animation:rise .9s var(--ease) forwards;
+    animation-delay:.42s;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-family:'Inter',sans-serif;
+    font-size:14.5px;
+    font-weight:600;
+    letter-spacing:.2px;
+    padding:16px 30px;
+    border-radius:999px;
+    cursor:pointer;
+    border:1.5px solid transparent;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+  }
+  .btn-primary{
+    background:var(--maroon-deep);
+    color:var(--paper);
+    box-shadow:0 10px 24px -8px rgba(92,24,24,.55);
+  }
+  .btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 16px 30px -10px rgba(92,24,24,.6);
+    background:var(--maroon-mid);
+  }
+  .btn-primary svg{transition:transform .3s var(--ease);}
+  .btn-primary:hover svg{transform:translateX(3px);}
+
+  .btn-ghost{
+    background:transparent;
+    color:var(--maroon-deep);
+    border-color:rgba(92,24,24,.3);
+  }
+  .btn-ghost:hover{
+    border-color:var(--maroon-deep);
+    background:rgba(92,24,24,.05);
+  }
+
+  .hero-note{
+    margin-top:36px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    letter-spacing:.3px;
+    opacity:0;
+    animation:rise .9s var(--ease) forwards;
+    animation-delay:.55s;
+  }
+
+  @keyframes rise{
+    to{opacity:1; transform:translateY(0);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important;}
+    .eyebrow,.hero h1,.hero-tagline,.hero-actions,.hero-note{opacity:1; transform:none;}
+  }
+
+  /* ───────── HERO SIDE CARD ───────── */
+  .id-card{
+    background:var(--paper);
+    border:1.5px solid var(--gold);
+    border-radius:var(--radius-lg);
+    padding:34px;
+    box-shadow:0 24px 44px -18px rgba(92,24,24,.25);
+    opacity:0;
+    transform:translateY(20px);
+    animation:rise .9s var(--ease) forwards;
+    animation-delay:.5s;
+  }
+  .id-card dt{
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:1.1px;
+    text-transform:uppercase;
+    color:var(--maroon-mid);
+    margin-bottom:5px;
+  }
+  .id-card dd{
+    font-size:15px;
+    color:var(--ink);
+    margin:0 0 22px;
+  }
+  .id-card dd:last-child{margin-bottom:0;}
+  .id-card .divider{
+    height:1px;
+    background:rgba(92,24,24,.12);
+    margin:22px 0;
+  }
+
+  /* ───────── SECTION SHELL ───────── */
+  section:not(.hero){
+    position:relative;
+    z-index:2;
+    background:var(--paper);
+    padding:120px 5vw 100px;
+    border-top:1px solid rgba(92,24,24,.08);
+  }
+  .inner{
+    max-width:1100px;
+    margin:0 auto;
+  }
+  .section-head{
+    max-width:640px;
+    margin-bottom:64px;
+  }
+  .section-head h2{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(30px,4vw,46px);
+    line-height:1.15;
+    color:var(--maroon-deep);
+    letter-spacing:-.5px;
+    margin-bottom:18px;
+  }
+  .section-head p{
+    font-size:16px;
+    line-height:1.7;
+    color:var(--ink-soft);
+  }
+
+  /* ───────── FEATURE GRID (skills / coursework) ───────── */
+  .feature-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:2px;
+    background:rgba(92,24,24,.1);
+    border:1px solid rgba(92,24,24,.1);
+    border-radius:var(--radius-lg);
+    overflow:hidden;
+  }
+  .feature{
+    background:var(--paper);
+    padding:38px 32px;
+    transition:background .3s var(--ease);
+  }
+  .feature:hover{background:var(--cream);}
+  .feature .num{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:13px;
+    color:var(--gold);
+    margin-bottom:20px;
+    display:block;
+  }
+  .feature h3{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:19px;
+    color:var(--maroon-deep);
+    margin-bottom:12px;
+  }
+  .feature p{
+    font-size:14px;
+    line-height:1.65;
+    color:var(--ink-soft);
+    margin-bottom:14px;
+  }
+  .feature ul{
+    list-style:none;
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+  }
+  .feature li{
+    font-size:12.5px;
+    padding:5px 11px;
+    border:1px solid rgba(92,24,24,.15);
+    border-radius:999px;
+    color:var(--maroon-mid);
+    background:var(--cream);
+  }
+
+  /* ───────── FEATURED PROJECT ───────── */
+  .project-frame{
+    border:1.5px solid var(--gold);
+    border-radius:var(--radius-lg);
+    background:var(--cream);
+    padding:44px;
+  }
+  .project-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-bottom:8px;
+  }
+  .project-plate{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:13px;
+    color:var(--gold);
+  }
+  .project-tags{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .project-tags span{
+    font-size:12px;
+    padding:5px 13px;
+    border:1px solid var(--maroon-deep);
+    color:var(--maroon-deep);
+    border-radius:999px;
+  }
+  .project-frame h3{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:28px;
+    color:var(--maroon-deep);
+    margin:14px 0 18px;
+    letter-spacing:-.3px;
+  }
+  .project-desc{
+    color:var(--ink-soft);
+    max-width:70ch;
+    margin:0 0 34px;
+    line-height:1.7;
+  }
+  .project-cols{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:36px;
+  }
+  .project-cols h4{
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    color:var(--maroon-mid);
+    margin:0 0 14px;
+  }
+  .project-cols ul{
+    margin:0;
+    padding-left:18px;
+    color:var(--ink-soft);
+    font-size:14.5px;
+    line-height:1.6;
+  }
+  .project-cols li{margin-bottom:9px;}
+  .project-cols li:last-child{margin-bottom:0;}
+  .project-links{
+    margin-top:34px;
+    padding-top:28px;
+    border-top:1px solid rgba(92,24,24,.12);
+    display:flex;
+    gap:26px;
+    font-size:14px;
+    font-weight:600;
+  }
+  .project-links a{
+    color:var(--maroon-deep);
+    border-bottom:1.5px solid var(--gold);
+    padding-bottom:2px;
+    transition:color .2s var(--ease), border-color .2s var(--ease);
+  }
+  .project-links a:hover{color:var(--maroon-mid); border-color:var(--maroon-deep);}
+
+  /* ───────── ABOUT TEXT BLOCK ───────── */
+  .about-body p{
+    max-width:66ch;
+    color:var(--ink-soft);
+    margin:0 0 18px;
+    line-height:1.75;
+  }
+  .about-body p:last-child{margin-bottom:0;}
+  .about-body strong{color:var(--maroon-deep); font-weight:600;}
+
+  .cta-quote{
+    margin-top:64px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:24px;
+    padding-top:44px;
+    border-top:1px solid rgba(92,24,24,.1);
+  }
+  .cta-quote p{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:20px;
+    color:var(--maroon-deep);
+    max-width:460px;
+  }
+
+  /* ───────── CONTACT ───────── */
+  .contact-card{
+    border:1.5px solid var(--gold);
+    border-radius:var(--radius-lg);
+    background:var(--cream);
+    padding:50px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:32px;
+  }
+  .contact-links{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .contact-links a{
+    font-size:16.5px;
+    font-weight:500;
+    display:inline-flex;
+    align-items:baseline;
+    gap:10px;
+    color:var(--ink);
+    width:fit-content;
+    border-bottom:1px solid transparent;
+    transition:border-color .2s var(--ease), color .2s var(--ease);
+  }
+  .contact-links a:hover{border-color:var(--maroon-deep); color:var(--maroon-deep);}
+  .contact-links span{
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    color:var(--maroon-mid);
+    min-width:80px;
+  }
+
+  footer{
+    background:var(--maroon-deep);
+    color:var(--gold-bright);
+    text-align:center;
+    padding:26px 5vw;
+    font-size:12.5px;
+    letter-spacing:.3px;
+  }
+  footer span{color:rgba(216,199,162,.55);}
+
+  /* ───────── RESPONSIVE ───────── */
+  @media (max-width:960px){
+    .hero-grid{grid-template-columns:1fr;}
+    .feature-grid{grid-template-columns:1fr;}
+    .project-cols{grid-template-columns:1fr;}
+    .cta-quote{flex-direction:column; align-items:flex-start;}
+    .contact-card{flex-direction:column; align-items:flex-start;}
+  }
+  @media (max-width:760px){
+    section:not(.hero){padding:90px 6vw 70px;}
+    .hero{padding-top:100px;}
+    .nav-links{
+      position:absolute;
+      top:100%; left:0; right:0;
+      background:var(--paper);
+      flex-direction:column;
+      align-items:flex-start;
+      padding:16px 6vw 24px;
+      border-bottom:1px solid rgba(92,24,24,.1);
+      display:none;
+      gap:16px;
+    }
+    .nav-links.open{display:flex;}
+    .nav-toggle{
+      display:inline-block;
+      background:none;
+      border:1.5px solid rgba(92,24,24,.3);
+      border-radius:999px;
+      padding:8px 16px;
+      font-size:13px;
+      font-weight:600;
+      color:var(--maroon-deep);
+      cursor:pointer;
+    }
+  }
+  @media (max-width:520px){
+    .hero h1{font-size:44px;}
+    .btn{padding:14px 24px; font-size:13.5px;}
+    .project-frame{padding:28px;}
+    .contact-card{padding:32px;}
+  }
+
+</style>
+</head>
+<body>
+
+  <!-- ───────── TOP NAV ───────── -->
+  <nav class="top-nav" id="topNav">
+    <div class="brand-mark">Eman Jahangir Khan<span class="dot"></span></div>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#work">Project</a>
+      <a href="#coursework">Coursework</a>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ───────── HERO ───────── -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Software Engineering · Mobile Development</span>
+        <h1>I build mobile<br>products that<br><em>hold together.</em></h1>
+        <p class="hero-tagline">
+          Final-year Computer Science / Software Engineering student who designs, builds, and ships full-stack mobile applications independently — from the database schema to the screen a user touches.
+        </p>
+        <div class="hero-actions">
+          <a href="#work" class="btn btn-primary">
+            See the project
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#contact" class="btn btn-ghost">Get in touch</a>
+        </div>
+        <p class="hero-note">Open to junior software / mobile developer roles and internships.</p>
+      </div>
+
+      <dl class="id-card">
+        <dt>Based in</dt>
+        <dd>Punjab, Pakistan</dd>
+        <div class="divider"></div>
+        <dt>Focus</dt>
+        <dd>Mobile app development, backend data design</dd>
+        <div class="divider"></div>
+        <dt>Core stack</dt>
+        <dd>Flutter, Dart, Firebase</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ───────── ABOUT ───────── -->
+  <section id="about">
+    <div class="inner">
+      <div class="section-head">
+        <span class="eyebrow">About</span>
+        <h2>A developer who finishes what she starts.</h2>
+      </div>
+      <div class="about-body">
+        <p>I'm currently completing my final year in Computer Science / Software Engineering, where I've spent the past several months designing and building <strong>ArtConnect</strong> — a social and portfolio platform for art students and faculty — entirely on my own, from the database schema to the last screen.</p>
+        <p>That work has taken me across the full stack of a real product: structuring Firestore data and security rules, handling authentication and role-based access for four different user types, debugging real-time features under free-tier infrastructure limits, and making the interface hold together as the feature set grew.</p>
+        <p>Alongside the FYP, my coursework in database systems and software engineering has given me a grounding in formal design — entity-relationship modelling, architecture documentation, and structured algorithm design — that I bring into how I plan and build software before I write a single line of code.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── SKILLS ───────── -->
+  <section id="skills">
+    <div class="inner">
+      <div class="section-head">
+        <span class="eyebrow">Skills</span>
+        <h2>What I work with.</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="feature">
+          <span class="num">01</span>
+          <h3>Languages</h3>
+          <ul>
+            <li>Dart</li><li>SQL</li><li>Java</li>
+          </ul>
+        </div>
+        <div class="feature">
+          <span class="num">02</span>
+          <h3>Mobile &amp; Backend</h3>
+          <ul>
+            <li>Flutter</li><li>Firebase Auth</li><li>Firestore</li><li>Firebase Storage</li><li>Security Rules</li>
+          </ul>
+        </div>
+        <div class="feature">
+          <span class="num">03</span>
+          <h3>Data &amp; Databases</h3>
+          <ul>
+            <li>Relational DB design</li><li>ERD (Chen notation)</li><li>NoSQL schema design</li>
+          </ul>
+        </div>
+        <div class="feature">
+          <span class="num">04</span>
+          <h3>Engineering Practice</h3>
+          <ul>
+            <li>Software design specs</li><li>Architecture diagramming</li><li>Algorithm documentation</li><li>Git</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── FEATURED PROJECT ───────── -->
+  <section id="work">
+    <div class="inner">
+      <div class="section-head">
+        <span class="eyebrow">Featured project</span>
+        <h2>ArtConnect</h2>
+        <p>A social &amp; portfolio platform for art students and faculty — designed and built independently as my final-year project.</p>
+      </div>
+
+      <div class="project-frame">
+        <div class="project-top">
+          <span class="project-plate">Final-year project</span>
+          <div class="project-tags">
+            <span>Flutter</span><span>Firebase</span><span>Dart</span>
+          </div>
+        </div>
+        <h3>Four roles, one connected system</h3>
+        <p class="project-desc">ArtConnect gives students a place to publish a portfolio and connect with faculty and buyers, while giving faculty and admins the tools to manage classes, submissions, and the community around them — across four distinct user roles: Student, Faculty, Visitor, and Admin.</p>
+
+        <div class="project-cols">
+          <div>
+            <h4>What it does</h4>
+            <ul>
+              <li>Role-based dashboards for Students, Faculty, Visitors, and Admins</li>
+              <li>Real-time one-to-one and group messaging, with request-based access control</li>
+              <li>Class scheduling for faculty, with per-student visibility</li>
+              <li>Assignment submission, review, and grading workflow</li>
+              <li>Event Q&amp;A with admin moderation and in-app notifications</li>
+              <li>Buyer purchase inquiries with an admin commission calculator</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Engineering decisions</h4>
+            <ul>
+              <li>Modelled Firestore collections and security rules to enforce role-based access without a paid backend tier</li>
+              <li>Designed a portfolio-eligibility index to gate chat access, since the primary collection's document IDs aren't user UIDs</li>
+              <li>Worked around free-tier Firebase Auth limits with an application-level user blocking system</li>
+              <li>Built a unified, app-wide real-time notification layer spanning chats, event Q&amp;A, and admin replies</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="project-links">
+          <a href="#">View repository</a>
+          <a href="#">Case study write-up</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── COURSEWORK ───────── -->
+  <section id="coursework">
+    <div class="inner">
+      <div class="section-head">
+        <span class="eyebrow">Coursework</span>
+        <h2>Academic foundation.</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="feature">
+          <span class="num">01</span>
+          <h3>Database Systems</h3>
+          <p>Entity-relationship modelling in Chen notation, relational schema design, and formal lab reporting.</p>
+        </div>
+        <div class="feature">
+          <span class="num">02</span>
+          <h3>Software Engineering</h3>
+          <p>System design specifications, architecture diagramming, and structured, numbered-step algorithm documentation.</p>
+        </div>
+        <div class="feature">
+          <span class="num">03</span>
+          <h3>Professional Practices</h3>
+          <p>Coursework covering the professional and ethical standards expected in software engineering practice.</p>
+        </div>
+      </div>
+      <div class="cta-quote">
+        <p>"Good software is designed on paper before it's ever written in code."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── CONTACT ───────── -->
+  <section id="contact">
+    <div class="inner">
+      <div class="section-head">
+        <span class="eyebrow">Contact</span>
+        <h2>Let's talk.</h2>
+        <p>I'm looking for a junior software or mobile development role where I can keep building products from the ground up. Reach out — I reply quickly.</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-links">
+          <a href="mailto:you@email.com"><span>Email</span> you@email.com</a>
+          <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener"><span>LinkedIn</span> linkedin.com/in/your-profile</a>
+          <a href="https://github.com/your-username" target="_blank" rel="noopener"><span>GitHub</span> github.com/your-username</a>
+        </div>
+        <a href="mailto:you@email.com" class="btn btn-primary">
+          Email me
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Eman Jahangir Khan <span>— Software Engineering student, Punjab, Pakistan</span>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('topNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 30);
+    }, { passive: true });
+
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        const open = links.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        links.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }));
+    }
+  </script>
+
+</body>
+</html>
